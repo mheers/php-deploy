@@ -1,0 +1,6 @@
+# Disallow accessing anything in the directory other than ./upload.php
+Order allow,deny
+Deny from all
+<FilesMatch ^\/?upload\.php$>
+    Allow from all
+</FilesMatch>
