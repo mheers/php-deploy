@@ -21,6 +21,9 @@ if($_GET['token']!=$token) {
     die();
 }
 
+// print_r($_SERVER);
+// print_r($_FILES);
+
 if(!array_key_exists('data', $_FILES)) {
     echo "no data received";
     die();
@@ -99,7 +102,12 @@ function copyrecursive($source, $destination) {
         if(is_dir($source.$file)) {
             mkdir($destination.$file);
             copyrecursive($source.$file, $destination."/".$file);
-        } else {
+        }
+        else if(is_dir($source."/".$file)) {
+            mkdir($destination."/".$file);
+            copyrecursive($source."/".$file, $destination."/".$file);
+        }
+        else {
             // If we copied this successfully, mark it for deletion
             if (copy($source."/".$file, $destination."/".$file)) {
                 $delete[] = $source.$file;

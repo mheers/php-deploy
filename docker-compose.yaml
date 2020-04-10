@@ -4,6 +4,6 @@ services:
     image: registry.heers.it/marcel/php-deploy
     build: .
     volumes:
-      - ./src/://var/www/html/
+      - ./src/://var/www/html/php-deploy/
     ports:
       - 8080:80
