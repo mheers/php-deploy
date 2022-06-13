@@ -14,3 +14,9 @@ In the `upload.php` file you can add your folder to the array:
 ```php
 if(!in_array($dir, ["php-deploy", "logs", "usage"]))
 ```
+
+## Development
+
+```bash
+sudo apt install php php-zip
+```

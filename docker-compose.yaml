@@ -1,9 +1,9 @@
 version: "3.0"
 services:
   php-deploy:
-    image: registry.heers.it/marcel/php-deploy
+    image: mheers/php-deploy
     build: .
     volumes:
-      - ./src/://var/www/html/php-deploy/
+      - ./src/:/var/www/html/php-deploy/
     ports:
       - 8080:80

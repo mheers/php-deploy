@@ -2,8 +2,8 @@
 
 set -e pipefail
 
-# BASE_URL=https://ht-industrial-solutions.com
-# TOKEN=5wrh5f4w2opows36
+docker-compose up -d php-deploy
+
 BASE_URL=http://localhost:8080
 TOKEN=my-secret-token
 
@@ -14,3 +14,5 @@ echo
 
 echo "deploying"
 curl -v -F "data=@./artifacts.zip" -L "${BASE_URL}/php-deploy/upload.php?token=${TOKEN}"
+
+docker-compose down
