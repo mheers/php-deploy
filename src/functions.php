@@ -1,6 +1,5 @@
 <?php
 
-
 function deleteAll($str)
 {
     //It it's a file.
@@ -9,7 +8,7 @@ function deleteAll($str)
         return unlink($str);
     }
     //If it's a directory.
-    elseif (is_dir($str)) {
+    elseif (isDir($str)) {
         //Get a list of the files in this directory.
         $dir = substr($str, 3);
         if (!in_array($dir, ["php-deploy", "logs", "usage"])) {
@@ -33,10 +32,10 @@ function copyrecursive($source, $destination)
     // Cycle through all source files
     foreach ($files as $file) {
         if (in_array($file, array(".", ".."))) continue;
-        if (is_dir($source . $file)) {
+        if (isDir($source . $file)) {
             mkdir($destination . $file);
             copyrecursive($source . $file, $destination . "/" . $file);
-        } else if (is_dir($source . "/" . $file)) {
+        } else if (isDir($source . "/" . $file)) {
             mkdir($destination . "/" . $file);
             copyrecursive($source . "/" . $file, $destination . "/" . $file);
         } else {
@@ -46,4 +45,10 @@ function copyrecursive($source, $destination)
             }
         }
     }
+}
+
+function isDir($path)
+{
+    $folders = glob($path, GLOB_ONLYDIR);
+    return count($folders) > 0 || is_dir($path);
 }

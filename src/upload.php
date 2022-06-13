@@ -1,21 +1,23 @@
 <?php
+require_once './functions.php';
+
 $token = "my-secret-token";
 $debug = true;
 
-if($debug) {
+if ($debug) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
 
 
-if(!array_key_exists('token', $_GET)) {
+if (!array_key_exists('token', $_GET)) {
     http_response_code(401);
     echo "no token found";
     die();
 }
 
-if($_GET['token']!=$token) {
+if ($_GET['token'] != $token) {
     http_response_code(403);
     echo "token not valid";
     die();
@@ -24,12 +26,10 @@ if($_GET['token']!=$token) {
 // print_r($_SERVER);
 // print_r($_FILES);
 
-if(!array_key_exists('data', $_FILES)) {
+if (!array_key_exists('data', $_FILES)) {
     echo "no data received";
     die();
-}
-
-else {
+} else {
     // get uploaded file
     $uploaddir = './';
     $uploadfile = $uploaddir . basename($_FILES['data']['name']);
@@ -40,9 +40,9 @@ else {
         echo "could not upload the file!\n";
         exit();
     }
-    
-    if($debug) print_r($_FILES);
-    
+
+    if ($debug) print_r($_FILES);
+
     // unzip the file
     $zip = new ZipArchive;
     if ($zip->open('artifacts.zip') === TRUE) {
@@ -56,10 +56,10 @@ else {
 
     // delete old files
     deleteAll('../');
-    
+
     // deploy the new files
     copyrecursive("./public/", "../");
-    
+
     // remove now orphan artifacts
     deleteAll('./public/');
     unlink('./artifacts.zip');
@@ -67,8 +67,5 @@ else {
     http_response_code(200);
     echo "deployed successfully";
 }
-
-
-
 
 #curl -F 'data=@/tmp/artifacts.zip' 'http://localhost/php-deploy/upload.php?token=test'
